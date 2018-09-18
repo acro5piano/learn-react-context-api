@@ -1,21 +1,9 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { ColorContext } from './context'
+import { ThemedButton, Toolbar } from './components'
 
-const ThemedButton = ({ title }) => (
-  <ColorContext.Consumer>
-    {theme => <div style={{ color: theme }}>{title}</div>}
-  </ColorContext.Consumer>
-)
-
-const Toolbar = () => (
-  <div>
-    <ThemedButton title="hello react" />
-  </div>
-)
-
-
-class App extends React.Component {
+export default class App extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -25,15 +13,14 @@ class App extends React.Component {
   }
 
   changeColor() {
-    if (this.state.color === 'red') {
-      this.setState({ color: 'blue' })
-    } else {
-      this.setState({ color: 'red' })
-    }
+    this.setState({
+      color: this.state.color === 'red' ? 'blue' : 'red'
+    })
   }
 
   render() {
     const { color } = this.state
+
     return (
       <ColorContext.Provider value={color}>
         <div>
@@ -46,9 +33,3 @@ class App extends React.Component {
     )
   }
 }
-
-
-render(
-  <App />,
-  document.getElementById('app'),
-)
